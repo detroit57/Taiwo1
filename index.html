@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speechless Couture | Stock Management</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- LOGIN PAGE -->
+  <section id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="brand-mark">SC</div>
+      <p class="eyebrow">LUXURY FASHION MANAGEMENT</p>
+      <h1>Speechless <span>Couture</span></h1>
+      <p class="muted">Welcome back. Please sign in.</p>
+
+      <form id="loginForm">
+        <label for="loginUsername">Username</label>
+        <input id="loginUsername" type="text" placeholder="Enter any username" required>
+
+        <label for="loginRole">Account type</label>
+        <select id="loginRole" required>
+          <option value="director">Director</option>
+          <option value="staff">Staff</option>
+        </select>
+
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" type="password" placeholder="Enter password" required>
+
+        <p id="loginMessage" class="message" role="alert"></p>
+        <button class="btn btn-gold full-width" type="submit">Sign In <span>→</span></button>
+      </form>
+
+      <div class="demo-details">
+        <strong>Demo access</strong>
+        <p>Director: <code>Director123!</code></p>
+        <p>Staff: <code>Staff123!</code></p>
+        <small>Enter any username and select the matching account type.</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN APPLICATION: HIDDEN UNTIL LOGIN -->
+  <div id="applicationShell" hidden>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark small-mark">SC</div>
+        <div>
+          <strong>Speechless</strong>
+          <span>COUTURE</span>
+        </div>
+      </div>
+
+      <p class="nav-label">WORKSPACE</p>
+      <nav class="navigation">
+        <a class="nav-link active" href="#dashboard" data-section="dashboard">▦ <span>Dashboard</span></a>
+        <a class="nav-link" href="#inventory" data-section="inventory">◇ <span>Inventory</span></a>
+        <a class="nav-link" href="#stock" data-section="stock">＋ <span>Receive Stock</span></a>
+        <a class="nav-link" href="#sales" data-section="sales">↗ <span>Record Sales</span></a>
+        <a class="nav-link" href="#expenses" data-section="expenses">− <span>Expenses</span></a>
+        <a class="nav-link director-only" href="#reports" data-section="reports">▤ <span>Reports</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="user-avatar">SC</div>
+        <div class="user-info">
+          <strong id="loggedInName">Team Member</strong>
+          <span id="loggedInRole">Staff</span>
+        </div>
+        <button id="logoutButton" class="logout-button" title="Sign out" aria-label="Sign out">↗</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="mobile-brand">SC <span>Speechless Couture</span></div>
+        <div>
+          <p class="eyebrow">INVENTORY MANAGEMENT</p>
+          <h2 id="pageTitle">Dashboard</h2>
+        </div>
+        <div class="topbar-right">
+          <span class="status-dot"></span>
+          <span id="todayDate"></span>
+        </div>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section id="dashboard" class="page-section">
+        <div class="welcome-banner">
+          <div>
+            <p class="eyebrow">YOUR BUSINESS AT A GLANCE</p>
+            <h1>Welcome to your workspace.</h1>
+            <p>Manage your collection, track stock and keep every sale in view.</p>
+          </div>
+          <div class="banner-decoration">SC</div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-top"><span>Total Products</span><span class="stat-icon">◇</span></div>
+            <h3 id="statProducts">0</h3>
+            <p>Unique product types</p>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Units in Stock</span><span class="stat-icon">▤</span></div>
+            <h3 id="statUnits">0</h3>
+            <p>Across all products</p>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Stock Value</span><span class="stat-icon">₦</span></div>
+            <h3 id="statValue">₦0</h3>
+            <p>Based on purchase cost</p>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Sales Recorded</span><span class="stat-icon">↗</span></div>
+            <h3 id="statSales">₦0</h3>
+            <p>Total recorded sales</p>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div><p class="eyebrow">INVENTORY HEALTH</p><h3>Low-stock alerts</h3></div>
+              <a href="#inventory" class="text-link" data-go="inventory">View inventory →</a>
+            </div>
+            <div id="lowStockList" class="low-stock-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div><p class="eyebrow">QUICK ACCESS</p><h3>Quick actions</h3></div>
+            </div>
+            <div class="quick-actions">
+              <button class="quick-action" data-go="inventory"><span>＋</span><div><strong>Add a product</strong><small>Expand your collection</small></div><b>→</b></button>
+              <button class="quick-action" data-go="stock"><span>↓</span><div><strong>Receive stock</strong><small>Record incoming items</small></div><b>→</b></button>
+              <button class="quick-action" data-go="sales"><span>↗</span><div><strong>Record a sale</strong><small>Update your stock</small></div><b>→</b></button>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">LATEST ACTIVITY</p><h3>Recent transactions</h3></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Transaction</th><th>Details</th><th>Amount</th><th>Date</th></tr></thead>
+              <tbody id="recentTransactions"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- INVENTORY -->
+      <section id="inventory" class="page-section" hidden>
+        <div class="section-intro">
+          <div><p class="eyebrow">YOUR COLLECTION</p><h1>Product inventory</h1><p>Keep every item organised and accounted for.</p></div>
+        </div>
+
+        <article class="panel form-panel">
+          <div class="panel-heading"><div><p class="eyebrow">PRODUCT MANAGEMENT</p><h3>Add a product</h3></div></div>
+          <form id="productForm" class="form-grid">
+            <div class="field"><label for="productName">Product name *</label><input id="productName" required placeholder="e.g. Silk Evening Dress"></div>
+            <div class="field"><label for="productCategory">Category *</label>
+              <select id="productCategory" required>
+                <option value="">Choose category</option><option>Dresses</option><option>Tops</option><option>Trousers</option><option>Skirts</option><option>Traditional Wear</option><option>Accessories</option><option>Shoes</option><option>Bags</option><option>Other</option>
+              </select>
+            </div>
+            <div class="field"><label for="productSize">Size</label><select id="productSize"><option>One Size</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>Custom</option></select></div>
+            <div class="field"><label for="productColor">Colour</label><input id="productColor" placeholder="e.g. Black"></div>
+            <div class="field"><label for="productCost">Cost price (₦) *</label><input id="productCost" type="number" min="0" step="0.01" required placeholder="0"></div>
+            <div class="field"><label for="productPrice">Selling price (₦) *</label><input id="productPrice" type="number" min="0" step="0.01" required placeholder="0"></div>
+            <div class="field"><label for="productQuantity">Opening quantity *</label><input id="productQuantity" type="number" min="0" step="1" required value="0"></div>
+            <div class="field"><label for="productThreshold">Low-stock level</label><input id="productThreshold" type="number" min="0" step="1" value="5"></div>
+            <div class="form-actions"><button class="btn btn-gold" type="submit">＋ Add Product</button></div>
+          </form>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading inventory-heading">
+            <div><p class="eyebrow">PRODUCT REGISTER</p><h3>All products <span id="inventoryCount" class="count-pill">0</span></h3></div>
+            <input id="inventorySearch" class="search-input" placeholder="Search products..." aria-label="Search products">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Product</th><th>Category</th><th>Size / Colour</th><th>Quantity</th><th>Cost</th><th>Selling price</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody id="inventoryTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- RECEIVE STOCK -->
+      <section id="stock" class="page-section" hidden>
+        <div class="section-intro"><div><p class="eyebrow">INCOMING GOODS</p><h1>Receive stock</h1><p>Record new deliveries and update your inventory.</p></div></div>
+        <article class="panel form-panel">
+          <div class="panel-heading"><div><p class="eyebrow">STOCK ENTRY</p><h3>Record a delivery</h3></div></div>
+          <form id="stockForm" class="form-grid">
+            <div class="field full-field"><label for="stockProduct">Select product *</label><select id="stockProduct" required><option value="">Choose a product</option></select></div>
+            <div class="field"><label for="stockQuantity">Quantity received *</label><input id="stockQuantity" type="number" min="1" step="1" required placeholder="Enter quantity"></div>
+            <div class="field"><label for="stockSupplier">Supplier</label><input id="stockSupplier" placeholder="Supplier name"></div>
+            <div class="field"><label for="stockDate">Date received *</label><input id="stockDate" type="date" required></div>
+            <div class="field"><label for="stockNote">Note / reference</label><input id="stockNote" placeholder="Invoice or delivery note"></div>
+            <div class="form-actions"><button class="btn btn-gold" type="submit">Record Stock</button></div>
+          </form>
+        </article>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">DELIVERY LOG</p><h3>Recent stock receipts</h3></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Product</th><th>Quantity</th><th>Supplier</th><th>Reference</th><th>Date</th></tr></thead><tbody id="stockTable"></tbody></table></div>
+        </article>
+      </section>
+
+      <!-- SALES -->
+      <section id="sales" class="page-section" hidden>
+        <div class="section-intro"><div><p class="eyebrow">CUSTOMER TRANSACTIONS</p><h1>Record a sale</h1><p>Record purchases and automatically update stock quantities.</p></div></div>
+        <article class="panel form-panel">
+          <div class="panel-heading"><div><p class="eyebrow">NEW TRANSACTION</p><h3>Sale details</h3></div></div>
+          <form id="saleForm" class="form-grid">
+            <div class="field full-field"><label for="saleProduct">Product *</label><select id="saleProduct" required><option value="">Choose a product</option></select></div>
+            <div class="field"><label for="saleQuantity">Quantity sold *</label><input id="saleQuantity" type="number" min="1" step="1" required value="1"></div>
+            <div class="field"><label for="saleCustomer">Customer name</label><input id="saleCustomer" placeholder="Optional"></div>
+            <div class="field"><label for="saleDate">Sale date *</label><input id="saleDate" type="date" required></div>
+            <div class="field"><label for="salePayment">Payment method</label><select id="salePayment"><option>Cash</option><option>Bank Transfer</option><option>POS</option><option>Online</option><option>Other</option></select></div>
+            <div class="field full-field"><div class="sale-preview"><span>Estimated total</span><strong id="saleTotalPreview">₦0</strong></div></div>
+            <div class="form-actions"><button class="btn btn-gold" type="submit">Complete Sale</button></div>
+          </form>
+        </article>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">SALES HISTORY</p><h3>Recorded sales</h3></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Product</th><th>Customer</th><th>Quantity</th><th>Total</th><th>Payment</th><th>Date</th></tr></thead><tbody id="salesTable"></tbody></table></div>
+        </article>
+      </section>
+
+      <!-- EXPENSES -->
+      <section id="expenses" class="page-section" hidden>
+        <div class="section-intro"><div><p class="eyebrow">BUSINESS COSTS</p><h1>Expense tracker</h1><p>Keep a clear record of your operating expenses.</p></div></div>
+        <article class="panel form-panel">
+          <div class="panel-heading"><div><p class="eyebrow">NEW EXPENSE</p><h3>Record an expense</h3></div></div>
+          <form id="expenseForm" class="form-grid">
+            <div class="field"><label for="expenseDescription">Description *</label><input id="expenseDescription" required placeholder="e.g. Packaging materials"></div>
+            <div class="field"><label for="expenseCategory">Category *</label><select id="expenseCategory" required><option value="">Choose category</option><option>Rent</option><option>Transport</option><option>Utilities</option><option>Packaging</option><option>Marketing</option><option>Staff</option><option>Supplies</option><option>Other</option></select></div>
+            <div class="field"><label for="expenseAmount">Amount (₦) *</label><input id="expenseAmount" type="number" min="0.01" step="0.01" required placeholder="0"></div>
+            <div class="field"><label for="expenseDate">Date *</label><input id="expenseDate" type="date" required></div>
+            <div class="form-actions"><button class="btn btn-gold" type="submit">Save Expense</button></div>
+          </form>
+        </article>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">EXPENSE HISTORY</p><h3>Recorded expenses</h3></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Description</th><th>Category</th><th>Amount</th><th>Date</th><th>Action</th></tr></thead><tbody id="expensesTable"></tbody></table></div>
+        </article>
+      </section>
+
+      <!-- REPORTS -->
+      <section id="reports" class="page-section" hidden>
+        <div class="section-intro"><div><p class="eyebrow">BUSINESS OVERVIEW</p><h1>Reports</h1><p>Review your recorded sales, expenses and inventory position.</p></div><button id="exportButton" class="btn btn-outline">↓ Export CSV</button></div>
+        <div class="stats-grid report-stats">
+          <article class="stat-card"><div class="stat-top"><span>Total Sales</span><span class="stat-icon">↗</span></div><h3 id="reportSales">₦0</h3><p>All recorded sales</p></article>
+          <article class="stat-card"><div class="stat-top"><span>Total Expenses</span><span class="stat-icon">−</span></div><h3 id="reportExpenses">₦0</h3><p>All recorded expenses</p></article>
+          <article class="stat-card"><div class="stat-top"><span>Estimated Gross Profit</span><span class="stat-icon">₦</span></div><h3 id="reportProfit">₦0</h3><p>Sales minus recorded cost of goods</p></article>
+        </div>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">FINANCIAL SUMMARY</p><h3>Summary</h3></div></div>
+          <div id="reportSummary" class="report-summary"></div>
+        </article>
+      </section>
+
+      <footer class="footer"><span>© <span id="footerYear"></span> Speechless Couture</span><span>Elegance in every detail.</span></footer>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="index.js"></script>
+</body>
+</html>
